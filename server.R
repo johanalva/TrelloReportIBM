@@ -36,7 +36,9 @@ shinyServer(function(input, output, session) {
         au <- "https://trello.com/1/OAuthAuthorizeToken"
         ac <- "https://trello.com/1/OAuthGetAccessToken"
         otep <- oauth_endpoint(rq, au, ac, ae)
-        #options(httr_oauth_cache=FALSE)
+        
+        options(httr_oauth_cache=FALSE)
+        
         my_token <- oauth1.0_token(otep, apic)
         ae <- paste0(ae, ".json")
         req <- httr::GET(ae, my_token, paging = TRUE)
@@ -242,10 +244,10 @@ shinyServer(function(input, output, session) {
     )
     
     #close the R session when Chrome closes
-    # session$onSessionEnded(function() {
-    #     stopApp()
-    #     q("no")
-    # })
+    session$onSessionEnded(function() {
+        stopApp()
+        q("no")
+    })
     # 
 })
 
